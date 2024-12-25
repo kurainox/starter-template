@@ -1,0 +1,54 @@
+.nav-container {
+  max-width: 100px;
+  width: 100%;
+  /* border-right: 1px dashed var(--md-sys-color-outline-variant); */
+  background-color: var(--md-sys-color-surface-container);
+  /* height: 100vh; */
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  margin-top: 2rem;
+}
+
+.nav-item {
+  color: var(--md-sys-color-on-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: var(--font-open-sans);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.nav-item:hover > .nav-icon {
+  background-color: var(--md-sys-color-surface-container-highest);
+  border-radius: 200px;
+}
+
+.nav-icon {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+  padding: 2.25px 16px !important;
+  border-radius: 200px !important;
+  transition: background-color 0.318s ease;
+  /* color: blue !important; */
+}
+
+.active > .nav-item > .nav-icon {
+  padding: 2.25px 12px !important;
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container) !important;
+  padding: 2.25px 12px !important;
+}

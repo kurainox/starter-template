@@ -1,0 +1,92 @@
+.divider {
+  border: none;
+  margin: 0;
+}
+
+/* Horizontal variants */
+.horizontal {
+  width: 100%;
+  margin: var(--divider-spacing) 0;
+}
+
+.horizontal.solid {
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.horizontal.dashed {
+  border-bottom: 1px dashed var(--divider-color);
+}
+
+.horizontal.dotted {
+  border-bottom: 1px dotted var(--divider-color);
+}
+
+/* Vertical variants */
+.vertical {
+  height: 100%;
+  margin: 0 var(--divider-spacing);
+  display: inline-block;
+}
+
+.vertical.solid {
+  border-left: 1px solid var(--divider-color);
+}
+
+.vertical.dashed {
+  border-left: 1px dashed var(--divider-color);
+}
+
+.vertical.dotted {
+  border-left: 1px dotted var(--divider-color);
+}
+
+/* Divider with text */
+.dividerWithText {
+  display: flex;
+  align-items: center;
+  margin: var(--divider-spacing) 0;
+}
+
+.dividerWithText::before,
+.dividerWithText::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.text {
+  padding: 0 1rem;
+  color: #666;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* Text position variants */
+.text-left::before {
+  width: 5%;
+}
+
+.text-right::after {
+  width: 5%;
+}
+
+/* Vertical with text */
+.vertical.dividerWithText {
+  flex-direction: column;
+  height: 100%;
+  margin: 0 var(--divider-spacing);
+}
+
+.vertical.dividerWithText::before,
+.vertical.dividerWithText::after {
+  border-bottom: none;
+  border-left: 1px solid var(--divider-color);
+  height: 100%;
+  width: auto;
+}
+
+.vertical .text {
+  padding: 1rem 0;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}

@@ -1,0 +1,73 @@
+.elevated-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0 24px;
+  line-height: 16px;
+  position: relative;
+  overflow: clip;
+  max-height: 56px;
+  max-width: 56px;
+  height: 56px;
+  aspect-ratio: 1/1;
+  width: 100%;
+  cursor: pointer;
+}
+
+.withIcon {
+  padding-left: 16px;
+  gap: 8px;
+}
+
+.pill {
+  border-radius: 50%;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.ripple {
+  position: absolute;
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  left: var(--ripple-x);
+  top: var(--ripple-y);
+  border-radius: 50%;
+  /* background-color: rgba(255, 255, 255, 0.7); */
+  background-color: rgb(from var(--md-sys-color-secondary) r g b / 0.5);
+  transform-origin: center;
+  pointer-events: none;
+  animation: ripple 0.6s ease-out;
+  will-change: transform, opacity;
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.elevated-button:disabled {
+  background-color: var(--md-sys-color-surface-container-high) !important;
+  color: var(--md-sys-color-on-surface) !important;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
