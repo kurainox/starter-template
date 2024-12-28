@@ -13,21 +13,63 @@ import { useEffect, useState } from "react";
 const useAuth = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
-  const handleAuthChange = (user) => {
-    setCurrentUser(user);
-  };
+  // const handleAuthChange = (user) => {
+  //   setCurrentUser(user);
+  // };
 
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       handleAuthChange(user);
+  //     } else {
+  //       handleAuthChange(null);
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, [currentUser]);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    let unsubscribeFirestore = null;
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
-        handleAuthChange(user);
+        try {
+          const userRef = doc(db, "users", user.uid);
+          unsubscribeFirestore = onSnapshot(
+            userRef,
+            (doc) => {
+              setCurrentUser({
+                uid: user.uid,
+                emailVerified: user.emailVerified,
+                ...doc.data(),
+              });
+            },
+            (error) => {
+              console.log(error);
+              setCurrentUser(null);
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+
+        // handleAuthChange(user);
       } else {
-        handleAuthChange(null);
+        if (unsubscribeFirestore) {
+          unsubscribeFirestore();
+          unsubscribeFirestore = null;
+        }
+        setCurrentUser(null);
+
+        // handleAuthChange(null);
       }
     });
-
-    return () => unsubscribe();
-  }, [currentUser]);
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeFirestore) {
+        unsubscribeFirestore();
+      }
+    };
+  }, []);
 
   const signupWithEmailAndPassword = async (email, password) => {
     try {
@@ -59,10 +101,11 @@ const useAuth = () => {
       await setDoc(userRef, userData);
 
       await sendEmailVerification(user);
-      handleAuthChange(user);
+      // handleAuthChange(user);
+      return { user };
     } catch (error) {
       console.log(error);
-      handleAuthChange(null);
+      // handleAuthChange(null);
       return error;
     }
   };
@@ -74,11 +117,12 @@ const useAuth = () => {
         email,
         password
       );
-      const user = loggedInUser.user;
-      handleAuthChange(user);
+      // const user = loggedInUser.user;
+      // handleAuthChange(user);
+      return { user: loggedInUser.user };
     } catch (error) {
       console.log(error);
-      handleAuthChange(null);
+      // handleAuthChange(null);
       return { error };
     }
   };
@@ -86,7 +130,8 @@ const useAuth = () => {
   const logout = async () => {
     try {
       await signOut(auth);
-      handleAuthChange(null);
+      // handleAuthChange(null);
+      return { success: true };
     } catch (error) {
       console.log(error);
       return { error };
